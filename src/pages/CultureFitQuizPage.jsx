@@ -1,0 +1,153 @@
+import { useState, useMemo } from 'react';
+import { useCultureFitQuestions } from '../hooks/useQuestions';
+import CategoryFilter from '../components/CategoryFilter';
+import Loading from '../components/Loading';
+import './CultureFitQuizPage.css';
+
+function shuffle(array) {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+export default function CultureFitQuizPage() {
+  const { data: allData = [], isLoading, error } = useCultureFitQuestions();
+  const bookmarked = useMemo(() => allData.filter((q) => q.bookmarked), [allData]);
+
+  const [category, setCategory] = useState('');
+  const [shuffled, setShuffled] = useState(null);
+  const [index, setIndex] = useState(0);
+  const [revealed, setRevealed] = useState(false);
+
+  const categories = useMemo(() => {
+    const set = new Set(bookmarked.map((q) => q.category).filter(Boolean));
+    return [...set];
+  }, [bookmarked]);
+
+  const pool = useMemo(() => {
+    return category ? bookmarked.filter((q) => q.category === category) : bookmarked;
+  }, [bookmarked, category]);
+
+  const questions = useMemo(() => {
+    if (shuffled && shuffled.key === `${category}-${pool.length}`) {
+      return shuffled.list;
+    }
+    return shuffle(pool);
+  }, [pool, shuffled, category]);
+
+  if (!shuffled && pool.length > 0) {
+    setShuffled({ key: `${category}-${pool.length}`, list: shuffle(pool) });
+  }
+
+  const handleCategoryChange = (cat) => {
+    setCategory(cat);
+    const filtered = cat ? bookmarked.filter((q) => q.category === cat) : bookmarked;
+    setShuffled({ key: `${cat}-${filtered.length}`, list: shuffle(filtered) });
+    setIndex(0);
+    setRevealed(false);
+  };
+
+  const handleReveal = () => {
+    setRevealed(true);
+  };
+
+  const handleNext = () => {
+    const isLast = index >= questions.length - 1;
+    if (isLast) {
+      setShuffled({ key: `${category}-${pool.length}-${Date.now()}`, list: shuffle(questions) });
+      setIndex(0);
+    } else {
+      setIndex(index + 1);
+    }
+    setRevealed(false);
+  };
+
+  if (isLoading) return <Loading />;
+
+  if (error) {
+    return (
+      <div className="cf-quiz-error">
+        <p>데이터를 불러올 수 없습니다.</p>
+        <p className="cf-quiz-error-detail">{error.message}</p>
+      </div>
+    );
+  }
+
+  const current = shuffled?.list?.[index];
+
+  if (!current) {
+    return (
+      <div className="cf-quiz">
+        {categories.length > 0 && (
+          <CategoryFilter
+            categories={categories}
+            selected={category}
+            onChange={handleCategoryChange}
+          />
+        )}
+        <div className="cf-quiz-error">
+          <p>즐겨찾기된 질문이 없습니다.</p>
+        </div>
+      </div>
+    );
+  }
+
+  const isLast = index >= (shuffled?.list?.length ?? 0) - 1;
+  const total = shuffled?.list?.length ?? 0;
+
+  return (
+    <div className="cf-quiz">
+      {categories.length > 0 && (
+        <CategoryFilter
+          categories={categories}
+          selected={category}
+          onChange={handleCategoryChange}
+        />
+      )}
+
+      <div className="cf-quiz-progress">
+        <span className="cf-quiz-progress-text">
+          {index + 1} / {total}
+        </span>
+        <div className="cf-quiz-progress-bar">
+          <div
+            className="cf-quiz-progress-fill"
+            style={{ width: `${((index + 1) / total) * 100}%` }}
+          />
+        </div>
+      </div>
+
+      <div className="cf-quiz-card">
+        <h2 className="cf-quiz-question">{current.title}</h2>
+
+        {!revealed && (
+          <p className="cf-quiz-hint">머릿속으로 답변을 정리해보세요.</p>
+        )}
+
+        {revealed && current.answer && (
+          <div className="cf-quiz-answer-section">
+            <div className="cf-quiz-answer-card">
+              <h4 className="cf-quiz-answer-label">면접 답변</h4>
+              <p className="cf-quiz-answer-text">{current.answer}</p>
+            </div>
+          </div>
+        )}
+      </div>
+
+      <div className="cf-quiz-actions">
+        {!revealed ? (
+          <button className="cf-quiz-btn primary" onClick={handleReveal}>
+            정답 보기
+          </button>
+        ) : (
+          <button className="cf-quiz-btn success" onClick={handleNext}>
+            {isLast ? '처음부터 다시' : '다음 문제'}
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}

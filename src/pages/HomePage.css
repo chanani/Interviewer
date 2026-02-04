@@ -24,16 +24,17 @@
 }
 
 .home-cards {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
 }
 
 .home-card {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding: 24px;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 12px;
   background: var(--color-card);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
@@ -46,8 +47,8 @@
 }
 
 .home-card-icon {
-  width: 48px;
-  height: 48px;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -69,13 +70,13 @@
   color: #8E61FF;
 }
 
-.home-card-title {
-  font-size: 18px;
-  font-weight: 700;
+.culture-quiz-icon {
+  background: rgba(255, 97, 136, 0.1);
+  color: #FF6188;
 }
 
-.home-card-desc {
+.home-card-title {
   font-size: 14px;
-  color: var(--color-text-secondary);
-  line-height: 1.5;
+  font-weight: 700;
+  text-align: center;
 }
