@@ -38,4 +38,4 @@ USER nodeuser
 EXPOSE 3000
 
 # serve를 사용해서 정적 파일 서빙
-CMD ["serve", "-s", "build", "-l", "3000"]
+CMD ["serve", "-s", "build", "-l", "3009"]
