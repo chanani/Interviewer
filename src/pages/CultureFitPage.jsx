@@ -1,22 +1,15 @@
-import { useState, useEffect, useMemo } from 'react';
-import { fetchCultureFit } from '../api/notion';
+import { useState, useMemo } from 'react';
+import { useCultureFitQuestions } from '../hooks/useQuestions';
 import QuestionCard from '../components/QuestionCard';
 import CategoryFilter from '../components/CategoryFilter';
 import Loading from '../components/Loading';
 import './CultureFitPage.css';
 
-export default function CultureFitPage() {
-  const [questions, setQuestions] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [category, setCategory] = useState('');
+const QUERY_KEY = ['culturefit-questions'];
 
-  useEffect(() => {
-    fetchCultureFit()
-      .then(setQuestions)
-      .catch((err) => setError(err.message))
-      .finally(() => setLoading(false));
-  }, []);
+export default function CultureFitPage() {
+  const { data: questions = [], isLoading, error } = useCultureFitQuestions();
+  const [category, setCategory] = useState('');
 
   const categories = useMemo(() => {
     const set = new Set(questions.map((q) => q.category).filter(Boolean));
@@ -30,19 +23,13 @@ export default function CultureFitPage() {
     return [...list].sort((a, b) => (b.bookmarked ? 1 : 0) - (a.bookmarked ? 1 : 0));
   }, [questions, category]);
 
-  const handleBookmarkChange = (id, checked) => {
-    setQuestions((prev) =>
-      prev.map((q) => (q.id === id ? { ...q, bookmarked: checked } : q))
-    );
-  };
-
-  if (loading) return <Loading />;
+  if (isLoading) return <Loading />;
 
   if (error) {
     return (
       <div className="culture-error">
         <p>데이터를 불러올 수 없습니다.</p>
-        <p className="culture-error-detail">{error}</p>
+        <p className="culture-error-detail">{error.message}</p>
       </div>
     );
   }
@@ -67,7 +54,7 @@ export default function CultureFitPage() {
             question={q}
             simple
             showBookmark
-            onBookmarkChange={handleBookmarkChange}
+            queryKey={QUERY_KEY}
           />
         ))}
       </div>

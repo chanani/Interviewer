@@ -1,5 +1,6 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
-import { fetchQuestions, fetchPageBlocks } from '../api/notion';
+import { useState, useMemo } from 'react';
+import { useCSQuestions } from '../hooks/useQuestions';
+import { fetchPageBlocks } from '../api/notion';
 import NotionRenderer from '../components/NotionRenderer';
 import CategoryFilter from '../components/CategoryFilter';
 import Loading from '../components/Loading';
@@ -15,46 +16,44 @@ function shuffle(array) {
 }
 
 export default function QuizPage() {
-  const [allQuestions, setAllQuestions] = useState([]);
-  const [questions, setQuestions] = useState([]);
+  const { data: allData = [], isLoading, error } = useCSQuestions();
+  const bookmarked = useMemo(() => allData.filter((q) => q.bookmarked), [allData]);
+
+  const [category, setCategory] = useState('');
+  const [shuffled, setShuffled] = useState(null);
   const [index, setIndex] = useState(0);
   const [revealed, setRevealed] = useState(false);
   const [detailOpen, setDetailOpen] = useState(false);
   const [blocks, setBlocks] = useState(null);
   const [blocksLoading, setBlocksLoading] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [category, setCategory] = useState('');
-
-  const loadQuestions = useCallback(() => {
-    setLoading(true);
-    setError(null);
-    fetchQuestions()
-      .then((data) => {
-        const quizOnly = data.filter((q) => q.bookmarked);
-        setAllQuestions(quizOnly);
-        setQuestions(shuffle(quizOnly));
-        resetQuiz();
-      })
-      .catch((err) => setError(err.message))
-      .finally(() => setLoading(false));
-  }, []);
-
-  useEffect(() => {
-    loadQuestions();
-  }, [loadQuestions]);
 
   const categories = useMemo(() => {
-    const set = new Set(allQuestions.map((q) => q.category).filter(Boolean));
+    const set = new Set(bookmarked.map((q) => q.category).filter(Boolean));
     return [...set];
-  }, [allQuestions]);
+  }, [bookmarked]);
+
+  // 현재 카테고리에 맞는 문제 목록
+  const pool = useMemo(() => {
+    return category ? bookmarked.filter((q) => q.category === category) : bookmarked;
+  }, [bookmarked, category]);
+
+  // 셔플 초기화: pool 변경 시 리셋
+  const questions = useMemo(() => {
+    if (shuffled && shuffled.key === `${category}-${pool.length}`) {
+      return shuffled.list;
+    }
+    return shuffle(pool);
+  }, [pool, shuffled, category]);
+
+  // 셔플 상태가 없으면 초기화
+  if (!shuffled && pool.length > 0) {
+    setShuffled({ key: `${category}-${pool.length}`, list: shuffle(pool) });
+  }
 
   const handleCategoryChange = (cat) => {
     setCategory(cat);
-    const filtered = cat
-      ? allQuestions.filter((q) => q.category === cat)
-      : allQuestions;
-    setQuestions(shuffle(filtered));
+    const filtered = cat ? bookmarked.filter((q) => q.category === cat) : bookmarked;
+    setShuffled({ key: `${cat}-${filtered.length}`, list: shuffle(filtered) });
     resetQuiz();
   };
 
@@ -89,7 +88,7 @@ export default function QuizPage() {
   const handleNext = () => {
     const isLast = index >= questions.length - 1;
     if (isLast) {
-      setQuestions(shuffle(questions));
+      setShuffled({ key: `${category}-${pool.length}-${Date.now()}`, list: shuffle(questions) });
       setIndex(0);
     } else {
       setIndex(index + 1);
@@ -99,18 +98,20 @@ export default function QuizPage() {
     setBlocks(null);
   };
 
-  if (loading) return <Loading />;
+  if (isLoading) return <Loading />;
 
   if (error) {
     return (
       <div className="quiz-error">
         <p>데이터를 불러올 수 없습니다.</p>
-        <p className="quiz-error-detail">{error}</p>
+        <p className="quiz-error-detail">{error.message}</p>
       </div>
     );
   }
 
-  if (questions.length === 0) {
+  const current = shuffled?.list?.[index];
+
+  if (!current) {
     return (
       <div className="quiz">
         {categories.length > 0 && (
@@ -127,8 +128,8 @@ export default function QuizPage() {
     );
   }
 
-  const current = questions[index];
-  const isLast = index >= questions.length - 1;
+  const isLast = index >= (shuffled?.list?.length ?? 0) - 1;
+  const total = shuffled?.list?.length ?? 0;
 
   return (
     <div className="quiz">
@@ -142,12 +143,12 @@ export default function QuizPage() {
 
       <div className="quiz-progress">
         <span className="quiz-progress-text">
-          {index + 1} / {questions.length}
+          {index + 1} / {total}
         </span>
         <div className="quiz-progress-bar">
           <div
             className="quiz-progress-fill"
-            style={{ width: `${((index + 1) / questions.length) * 100}%` }}
+            style={{ width: `${((index + 1) / total) * 100}%` }}
           />
         </div>
       </div>

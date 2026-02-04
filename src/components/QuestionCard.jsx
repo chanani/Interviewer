@@ -1,16 +1,17 @@
 import { useState, useRef, useEffect } from 'react';
-import { fetchPageBlocks, updateBookmark } from '../api/notion';
+import { fetchPageBlocks } from '../api/notion';
+import { useBookmarkMutation } from '../hooks/useQuestions';
 import NotionRenderer from './NotionRenderer';
 import './QuestionCard.css';
 
-export default function QuestionCard({ question, simple, showBookmark, onBookmarkChange }) {
+export default function QuestionCard({ question, simple, showBookmark, queryKey }) {
   const [open, setOpen] = useState(false);
   const [detailOpen, setDetailOpen] = useState(false);
   const [blocks, setBlocks] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [bookmarked, setBookmarked] = useState(question.bookmarked);
-  const [saving, setSaving] = useState(false);
   const loaded = useRef(false);
+
+  const bookmarkMutation = useBookmarkMutation(queryKey);
 
   const handleToggle = () => {
     setOpen(!open);
@@ -45,19 +46,12 @@ export default function QuestionCard({ question, simple, showBookmark, onBookmar
     }
   };
 
-  const handleBookmarkToggle = async (e) => {
+  const handleBookmarkToggle = (e) => {
     e.stopPropagation();
-    const next = !bookmarked;
-    setBookmarked(next);
-    setSaving(true);
-    try {
-      await updateBookmark(question.id, next);
-      onBookmarkChange?.(question.id, next);
-    } catch {
-      setBookmarked(!next);
-    } finally {
-      setSaving(false);
-    }
+    bookmarkMutation.mutate({
+      pageId: question.id,
+      checked: !question.bookmarked,
+    });
   };
 
   return (
@@ -67,11 +61,11 @@ export default function QuestionCard({ question, simple, showBookmark, onBookmar
           <span
             role="button"
             tabIndex={0}
-            className={`question-card-bookmark ${bookmarked ? 'active' : ''} ${saving ? 'saving' : ''}`}
+            className={`question-card-bookmark ${question.bookmarked ? 'active' : ''}`}
             onClick={handleBookmarkToggle}
             onKeyDown={(e) => { if (e.key === 'Enter') handleBookmarkToggle(e); }}
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill={bookmarked ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill={question.bookmarked ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
             </svg>
           </span>
