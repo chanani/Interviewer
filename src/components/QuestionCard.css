@@ -1,0 +1,173 @@
+.question-card {
+  background: var(--color-card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.2s;
+}
+
+.question-card.open {
+  box-shadow: var(--shadow-md);
+}
+
+.question-card-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 14px 16px;
+  text-align: left;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-text);
+  gap: 10px;
+}
+
+/* 즐겨찾기 (인라인) */
+.question-card-bookmark {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: 4px;
+  color: var(--color-text-tertiary);
+  transition: color 0.15s, transform 0.15s;
+  cursor: pointer;
+}
+
+.question-card-bookmark:hover {
+  color: var(--color-text-secondary);
+}
+
+.question-card-bookmark.active {
+  color: #F59E0B;
+}
+
+.question-card-bookmark:active {
+  transform: scale(0.85);
+}
+
+.question-card-bookmark.saving {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.question-card-title {
+  flex: 1;
+  line-height: 1.5;
+}
+
+.question-card-chevron {
+  flex-shrink: 0;
+  color: var(--color-text-tertiary);
+  transition: transform 0.2s;
+}
+
+.question-card.open .question-card-chevron {
+  transform: rotate(180deg);
+}
+
+/* 아코디언 애니메이션 */
+.question-card-collapse {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease;
+}
+
+.question-card.open .question-card-collapse {
+  grid-template-rows: 1fr;
+}
+
+.question-card-body {
+  overflow: hidden;
+  min-height: 0;
+  padding: 0 20px;
+  transition: padding 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.question-card.open .question-card-body {
+  padding: 0 20px 20px;
+}
+
+/* 면접 답변 요약 카드 */
+.question-card-answer {
+  background: rgba(49, 130, 246, 0.05);
+  border-left: 3px solid var(--color-primary);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.question-card-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-primary);
+  letter-spacing: 0.3px;
+}
+
+.question-card-answer-text {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+  white-space: pre-wrap;
+}
+
+/* 자세히 보기 토글 */
+.question-card-detail-toggle {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-tertiary);
+  padding: 4px 0;
+  transition: color 0.15s;
+}
+
+.question-card-detail-toggle:hover {
+  color: var(--color-text-secondary);
+}
+
+.question-card-detail-toggle svg {
+  transition: transform 0.2s;
+}
+
+.question-card-detail-toggle.open svg {
+  transform: rotate(180deg);
+}
+
+/* 상세 내용 애니메이션 */
+.question-card-detail {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease;
+}
+
+.question-card-detail.open {
+  grid-template-rows: 1fr;
+}
+
+.question-card-detail-inner {
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* 로딩 */
+.question-card-loading {
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+}
+
+.question-card-spinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--color-border);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}

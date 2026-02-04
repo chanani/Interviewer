@@ -1,0 +1,48 @@
+:root {
+  --color-primary: #3182F6;
+  --color-primary-hover: #1B6AE0;
+  --color-success: #00C471;
+  --color-bg: #F2F4F6;
+  --color-white: #FFFFFF;
+  --color-text: #191F28;
+  --color-text-secondary: #6B7684;
+  --color-text-tertiary: #8B95A1;
+  --color-border: #E5E8EB;
+  --color-card: #FFFFFF;
+  --radius: 16px;
+  --radius-sm: 12px;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+  --max-width: 640px;
+  --header-height: 56px;
+  --bottom-nav-height: 64px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont,
+    system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo',
+    'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol', sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}

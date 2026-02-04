@@ -1,0 +1,138 @@
+.notion-renderer {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+}
+
+.notion-paragraph {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.notion-spacer {
+  height: 8px;
+}
+
+.notion-h1 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-top: 12px;
+}
+
+.notion-h2 {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-top: 10px;
+}
+
+.notion-h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-top: 8px;
+}
+
+.notion-inline-code {
+  background: rgba(49, 130, 246, 0.08);
+  color: var(--color-primary);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-family: 'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace;
+}
+
+.notion-code-wrapper {
+  position: relative;
+  margin: 8px 0;
+}
+
+.notion-code-lang {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.notion-code {
+  background: #1e1e1e;
+  color: #d4d4d4;
+  padding: 20px;
+  border-radius: var(--radius-sm);
+  overflow-x: auto;
+  font-size: 13px;
+  line-height: 1.6;
+  font-family: 'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace;
+}
+
+.notion-code code {
+  white-space: pre;
+}
+
+.notion-ul,
+.notion-ol {
+  padding-left: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.notion-li {
+  line-height: 1.7;
+}
+
+.notion-quote {
+  border-left: 3px solid var(--color-primary);
+  padding: 4px 16px;
+  color: var(--color-text-secondary);
+  margin: 4px 0;
+}
+
+.notion-callout {
+  display: flex;
+  gap: 10px;
+  padding: 16px;
+  background: var(--color-bg);
+  border-radius: var(--radius-sm);
+  margin: 4px 0;
+}
+
+.notion-callout-icon {
+  flex-shrink: 0;
+  font-size: 18px;
+}
+
+.notion-divider {
+  border: none;
+  border-top: 1px solid var(--color-border);
+  margin: 8px 0;
+}
+
+.notion-toggle {
+  margin: 4px 0;
+}
+
+.notion-toggle summary {
+  cursor: pointer;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.notion-link {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-decoration-color: rgba(49, 130, 246, 0.3);
+  text-underline-offset: 2px;
+}
+
+.notion-link:hover {
+  text-decoration-color: var(--color-primary);
+}

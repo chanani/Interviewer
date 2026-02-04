@@ -1,0 +1,81 @@
+.home {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.home-hero {
+  text-align: center;
+  padding: 40px 0 8px;
+}
+
+.home-title {
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.4;
+  color: var(--color-text);
+}
+
+.home-subtitle {
+  margin-top: 12px;
+  font-size: 16px;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+.home-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.home-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px;
+  background: var(--color-card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.home-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.home-card-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+}
+
+.browse-icon {
+  background: rgba(49, 130, 246, 0.1);
+  color: var(--color-primary);
+}
+
+.quiz-icon {
+  background: rgba(0, 196, 113, 0.1);
+  color: var(--color-success);
+}
+
+.culture-icon {
+  background: rgba(142, 97, 255, 0.1);
+  color: #8E61FF;
+}
+
+.home-card-title {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.home-card-desc {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}

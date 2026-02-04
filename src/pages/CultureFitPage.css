@@ -1,0 +1,42 @@
+.culture {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.culture-header {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.culture-title {
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.culture-count {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--color-text-tertiary);
+}
+
+.culture-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.culture-error {
+  text-align: center;
+  padding: 80px 0;
+  color: var(--color-text-secondary);
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.culture-error-detail {
+  font-size: 13px;
+  color: var(--color-text-tertiary);
+  margin-top: 4px;
+}
