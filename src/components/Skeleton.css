@@ -1,0 +1,128 @@
+.skeleton-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.skeleton-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 18px;
+  background: var(--color-card);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius);
+}
+
+.skeleton-bookmark {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-xs);
+  background: var(--color-border-light);
+  animation: shimmer 1.5s infinite;
+}
+
+.skeleton-title {
+  flex: 1;
+  height: 20px;
+  border-radius: 6px;
+  background: var(--color-border-light);
+  animation: shimmer 1.5s infinite;
+  animation-delay: 0.1s;
+}
+
+.skeleton-chevron {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  background: var(--color-border-light);
+  animation: shimmer 1.5s infinite;
+  animation-delay: 0.2s;
+}
+
+.skeleton-quiz {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.skeleton-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.skeleton-progress-text {
+  width: 60px;
+  height: 16px;
+  border-radius: 4px;
+  background: var(--color-border-light);
+  align-self: flex-end;
+  animation: shimmer 1.5s infinite;
+}
+
+.skeleton-progress-bar {
+  width: 100%;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--color-border-light);
+  animation: shimmer 1.5s infinite;
+  animation-delay: 0.1s;
+}
+
+.skeleton-quiz-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 32px 24px;
+  background: var(--color-card);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-lg);
+  min-height: 220px;
+}
+
+.skeleton-question {
+  width: 100%;
+  height: 24px;
+  border-radius: 6px;
+  background: var(--color-border-light);
+  animation: shimmer 1.5s infinite;
+  animation-delay: 0.2s;
+}
+
+.skeleton-question.short {
+  width: 60%;
+  animation-delay: 0.3s;
+}
+
+.skeleton-hint {
+  width: 180px;
+  height: 18px;
+  border-radius: 6px;
+  background: var(--color-border-light);
+  align-self: center;
+  margin-top: 24px;
+  animation: shimmer 1.5s infinite;
+  animation-delay: 0.4s;
+}
+
+.skeleton-btn {
+  width: 100%;
+  height: 56px;
+  border-radius: var(--radius);
+  background: var(--color-border-light);
+  animation: shimmer 1.5s infinite;
+  animation-delay: 0.5s;
+}
+
+@keyframes shimmer {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
