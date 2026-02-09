@@ -204,6 +204,23 @@
   box-shadow: var(--shadow);
 }
 
+.quiz-btn.secondary {
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border);
+  box-shadow: none;
+}
+
+.quiz-btn.secondary:hover:not(:disabled) {
+  background: var(--color-hover);
+  color: var(--color-text-primary);
+}
+
+.quiz-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
 .quiz-error {
   text-align: center;
   padding: 80px 0;

@@ -4,6 +4,7 @@ import { fetchPageBlocks } from '../api/notion';
 import NotionRenderer from '../components/NotionRenderer';
 import CategoryFilter from '../components/CategoryFilter';
 import VoiceRecorder from '../components/VoiceRecorder';
+import InterviewTimer from '../components/InterviewTimer';
 import { SkeletonQuiz } from '../components/Skeleton';
 import EmptyState from '../components/EmptyState';
 import { useToast } from '../components/Toast';
@@ -31,6 +32,7 @@ export default function QuizPage() {
   const [blocks, setBlocks] = useState(null);
   const [blocksLoading, setBlocksLoading] = useState(false);
   const [recorderKey, setRecorderKey] = useState(0);
+  const [timerKey, setTimerKey] = useState(0);
 
   const categories = useMemo(() => {
     const set = new Set(bookmarked.map((q) => q.category).filter(Boolean));
@@ -91,6 +93,17 @@ export default function QuizPage() {
     }
   };
 
+  const handlePrev = () => {
+    if (index > 0) {
+      setIndex(index - 1);
+      setRevealed(false);
+      setDetailOpen(false);
+      setBlocks(null);
+      setRecorderKey((prev) => prev + 1);
+      setTimerKey((prev) => prev + 1);
+    }
+  };
+
   const handleNext = () => {
     const isLast = index >= questions.length - 1;
     if (isLast) {
@@ -103,6 +116,7 @@ export default function QuizPage() {
     setDetailOpen(false);
     setBlocks(null);
     setRecorderKey((prev) => prev + 1);
+    setTimerKey((prev) => prev + 1);
   };
 
   if (isLoading) return <SkeletonQuiz />;
@@ -151,6 +165,8 @@ export default function QuizPage() {
         </div>
       </div>
 
+      <InterviewTimer key={timerKey} revealed={revealed} />
+
       <div className="quiz-card">
         <h2 className="quiz-question">{current.title}</h2>
 
@@ -195,13 +211,20 @@ export default function QuizPage() {
       </div>
 
       <div className="quiz-actions">
+        <button
+          className="quiz-btn secondary"
+          onClick={handlePrev}
+          disabled={index === 0}
+        >
+          이전
+        </button>
         {!revealed ? (
           <button className="quiz-btn primary" onClick={handleReveal}>
             정답 보기
           </button>
         ) : (
           <button className="quiz-btn success" onClick={handleNext}>
-            {isLast ? '처음부터 다시' : '다음 문제'}
+            {isLast ? '처음부터' : '다음'}
           </button>
         )}
       </div>

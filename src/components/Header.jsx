@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { useTheme } from '../hooks/useTheme';
+import { useTheme } from '../hooks/useTheme.jsx';
 import './Header.css';
 
 export default function Header() {

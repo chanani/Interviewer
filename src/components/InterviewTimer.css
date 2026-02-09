@@ -1,0 +1,189 @@
+/* Toggle button - 닫힌 상태 */
+.timer-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  color: var(--color-text-secondary);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.timer-toggle:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: var(--color-primary-light);
+}
+
+.timer-toggle svg {
+  opacity: 0.7;
+}
+
+.timer-toggle:hover svg {
+  opacity: 1;
+}
+
+/* Timer - 열린 상태 */
+.interview-timer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+}
+
+.interview-timer-display {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: var(--color-background);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.interview-timer-display.running {
+  background: rgba(99, 102, 241, 0.1);
+}
+
+.interview-timer-display.running .interview-timer-icon {
+  color: var(--color-primary);
+  animation: timerPulse 1s ease-in-out infinite;
+}
+
+@keyframes timerPulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.interview-timer-icon {
+  color: var(--color-text-tertiary);
+  transition: color 0.3s ease;
+}
+
+.interview-timer-time {
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-primary);
+  min-width: 70px;
+  text-align: center;
+  transition: color 0.3s ease;
+}
+
+/* Time color states */
+.interview-timer-display.normal .interview-timer-time {
+  color: var(--color-text-primary);
+}
+
+.interview-timer-display.warning .interview-timer-time {
+  color: #f59e0b;
+}
+
+.interview-timer-display.over .interview-timer-time {
+  color: #ef4444;
+}
+
+.interview-timer-display.warning.running {
+  background: rgba(245, 158, 11, 0.1);
+}
+
+.interview-timer-display.over.running {
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.interview-timer-display.warning .interview-timer-icon {
+  color: #f59e0b;
+}
+
+.interview-timer-display.over .interview-timer-icon {
+  color: #ef4444;
+}
+
+.interview-timer-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.interview-timer-btn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.interview-timer-btn.start {
+  background: var(--color-primary);
+  color: white;
+}
+
+.interview-timer-btn.start:hover {
+  background: var(--color-primary-dark);
+  transform: scale(1.05);
+}
+
+.interview-timer-btn.pause {
+  background: #f59e0b;
+  color: white;
+}
+
+.interview-timer-btn.pause:hover {
+  background: #d97706;
+  transform: scale(1.05);
+}
+
+.interview-timer-btn.reset,
+.interview-timer-btn.close {
+  background: var(--color-hover);
+  color: var(--color-text-secondary);
+}
+
+.interview-timer-btn.reset:hover,
+.interview-timer-btn.close:hover {
+  background: var(--color-border);
+  color: var(--color-text-primary);
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .interview-timer {
+    padding: 10px 12px;
+    gap: 10px;
+  }
+
+  .interview-timer-display {
+    padding: 6px 12px;
+  }
+
+  .interview-timer-time {
+    font-size: 1.25rem;
+    min-width: 60px;
+  }
+
+  .interview-timer-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .interview-timer-btn svg {
+    width: 14px;
+    height: 14px;
+  }
+}

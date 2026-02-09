@@ -134,6 +134,23 @@
   box-shadow: var(--shadow);
 }
 
+.cf-quiz-btn.secondary {
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border);
+  box-shadow: none;
+}
+
+.cf-quiz-btn.secondary:hover:not(:disabled) {
+  background: var(--color-hover);
+  color: var(--color-text-primary);
+}
+
+.cf-quiz-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
 .cf-quiz-error {
   text-align: center;
   padding: 80px 0;
