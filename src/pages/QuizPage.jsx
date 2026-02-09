@@ -1,8 +1,9 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useRef } from 'react';
 import { useCSQuestions } from '../hooks/useQuestions';
 import { fetchPageBlocks } from '../api/notion';
 import NotionRenderer from '../components/NotionRenderer';
 import CategoryFilter from '../components/CategoryFilter';
+import VoiceRecorder from '../components/VoiceRecorder';
 import { SkeletonQuiz } from '../components/Skeleton';
 import EmptyState from '../components/EmptyState';
 import { useToast } from '../components/Toast';
@@ -29,6 +30,7 @@ export default function QuizPage() {
   const [detailOpen, setDetailOpen] = useState(false);
   const [blocks, setBlocks] = useState(null);
   const [blocksLoading, setBlocksLoading] = useState(false);
+  const [recorderKey, setRecorderKey] = useState(0);
 
   const categories = useMemo(() => {
     const set = new Set(bookmarked.map((q) => q.category).filter(Boolean));
@@ -100,6 +102,7 @@ export default function QuizPage() {
     setRevealed(false);
     setDetailOpen(false);
     setBlocks(null);
+    setRecorderKey((prev) => prev + 1);
   };
 
   if (isLoading) return <SkeletonQuiz />;
@@ -154,6 +157,8 @@ export default function QuizPage() {
         {!revealed && (
           <p className="quiz-hint">머릿속으로 답변을 정리해보세요.</p>
         )}
+
+        <VoiceRecorder key={recorderKey} />
 
         {revealed && (
           <div className="quiz-answer-section">

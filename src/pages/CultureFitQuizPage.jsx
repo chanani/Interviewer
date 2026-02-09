@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import { useCultureFitQuestions } from '../hooks/useQuestions';
 import CategoryFilter from '../components/CategoryFilter';
+import VoiceRecorder from '../components/VoiceRecorder';
 import { SkeletonQuiz } from '../components/Skeleton';
 import EmptyState from '../components/EmptyState';
 import './CultureFitQuizPage.css';
@@ -22,6 +23,7 @@ export default function CultureFitQuizPage() {
   const [shuffled, setShuffled] = useState(null);
   const [index, setIndex] = useState(0);
   const [revealed, setRevealed] = useState(false);
+  const [recorderKey, setRecorderKey] = useState(0);
 
   const categories = useMemo(() => {
     const set = new Set(bookmarked.map((q) => q.category).filter(Boolean));
@@ -64,6 +66,7 @@ export default function CultureFitQuizPage() {
       setIndex(index + 1);
     }
     setRevealed(false);
+    setRecorderKey((prev) => prev + 1);
   };
 
   if (isLoading) return <SkeletonQuiz />;
@@ -118,6 +121,8 @@ export default function CultureFitQuizPage() {
         {!revealed && (
           <p className="cf-quiz-hint">머릿속으로 답변을 정리해보세요.</p>
         )}
+
+        <VoiceRecorder key={recorderKey} />
 
         {revealed && current.answer && (
           <div className="cf-quiz-answer-section">
