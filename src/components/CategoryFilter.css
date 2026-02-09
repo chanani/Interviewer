@@ -1,6 +1,6 @@
 .category-filter {
   display: flex;
-  gap: 6px;
+  gap: 8px;
   overflow-x: auto;
   padding-bottom: 4px;
   -webkit-overflow-scrolling: touch;
@@ -13,24 +13,26 @@
 
 .category-chip {
   flex-shrink: 0;
-  padding: 8px 16px;
-  border-radius: 20px;
-  font-size: 14px;
+  padding: 10px 18px;
+  border-radius: var(--radius-full);
+  font-size: 13px;
   font-weight: 600;
   color: var(--color-text-secondary);
-  background: var(--color-white);
-  border: 1px solid var(--color-border);
-  transition: all 0.15s;
+  background: var(--color-card);
+  border: 1px solid var(--color-border-light);
+  transition: all 0.15s ease;
   white-space: nowrap;
 }
 
 .category-chip:hover {
   border-color: var(--color-primary);
   color: var(--color-primary);
+  background: var(--color-primary-light);
 }
 
 .category-chip.active {
   background: var(--color-primary);
   border-color: var(--color-primary);
-  color: var(--color-white);
+  color: white;
+  box-shadow: var(--shadow-sm);
 }

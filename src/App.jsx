@@ -5,6 +5,7 @@ import BrowsePage from './pages/BrowsePage';
 import QuizPage from './pages/QuizPage';
 import CultureFitPage from './pages/CultureFitPage';
 import CultureFitQuizPage from './pages/CultureFitQuizPage';
+import NotFoundPage from './pages/NotFoundPage';
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
         <Route path="/quiz" element={<QuizPage />} />
         <Route path="/culture" element={<CultureFitPage />} />
         <Route path="/culture-quiz" element={<CultureFitQuizPage />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Layout>
   );

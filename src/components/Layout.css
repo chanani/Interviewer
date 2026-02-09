@@ -1,12 +1,12 @@
 .layout-main {
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: calc(var(--header-height) + 16px) 20px 32px;
+  padding: calc(var(--header-height) + 24px) 20px 40px;
   min-height: 100vh;
 }
 
 @media (max-width: 640px) {
   .layout-main {
-    padding: 16px 16px calc(var(--bottom-nav-height) + 16px);
+    padding: 20px 16px calc(var(--bottom-nav-height) + 20px);
   }
 }

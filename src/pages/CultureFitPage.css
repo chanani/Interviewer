@@ -1,30 +1,35 @@
 .culture {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 20px;
+  animation: fadeIn 0.4s ease;
 }
 
 .culture-header {
   display: flex;
   align-items: baseline;
-  gap: 8px;
+  gap: 10px;
 }
 
 .culture-title {
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 800;
+  letter-spacing: -0.02em;
 }
 
 .culture-count {
-  font-size: 15px;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 600;
   color: var(--color-text-tertiary);
+  background: var(--color-border-light);
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
 }
 
 .culture-list {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
 .culture-error {
@@ -38,5 +43,12 @@
 .culture-error-detail {
   font-size: 13px;
   color: var(--color-text-tertiary);
-  margin-top: 4px;
+  margin-top: 8px;
+}
+
+.culture-empty {
+  text-align: center;
+  padding: 60px 0;
+  color: var(--color-text-tertiary);
+  font-size: 15px;
 }

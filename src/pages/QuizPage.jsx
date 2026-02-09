@@ -3,7 +3,9 @@ import { useCSQuestions } from '../hooks/useQuestions';
 import { fetchPageBlocks } from '../api/notion';
 import NotionRenderer from '../components/NotionRenderer';
 import CategoryFilter from '../components/CategoryFilter';
-import Loading from '../components/Loading';
+import { SkeletonQuiz } from '../components/Skeleton';
+import EmptyState from '../components/EmptyState';
+import { useToast } from '../components/Toast';
 import './QuizPage.css';
 
 function shuffle(array) {
@@ -18,6 +20,7 @@ function shuffle(array) {
 export default function QuizPage() {
   const { data: allData = [], isLoading, error } = useCSQuestions();
   const bookmarked = useMemo(() => allData.filter((q) => q.bookmarked), [allData]);
+  const toast = useToast();
 
   const [category, setCategory] = useState('');
   const [shuffled, setShuffled] = useState(null);
@@ -79,6 +82,7 @@ export default function QuizPage() {
         setBlocks(data);
       } catch {
         setBlocks([]);
+        toast.error('상세 내용을 불러올 수 없습니다');
       } finally {
         setBlocksLoading(false);
       }
@@ -98,7 +102,7 @@ export default function QuizPage() {
     setBlocks(null);
   };
 
-  if (isLoading) return <Loading />;
+  if (isLoading) return <SkeletonQuiz />;
 
   if (error) {
     return (
@@ -114,16 +118,7 @@ export default function QuizPage() {
   if (!current) {
     return (
       <div className="quiz">
-        {categories.length > 0 && (
-          <CategoryFilter
-            categories={categories}
-            selected={category}
-            onChange={handleCategoryChange}
-          />
-        )}
-        <div className="quiz-error">
-          <p>등록된 질문이 없습니다.</p>
-        </div>
+        <EmptyState type="bookmark" />
       </div>
     );
   }

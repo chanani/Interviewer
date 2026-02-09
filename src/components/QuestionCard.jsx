@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { fetchPageBlocks } from '../api/notion';
 import { useBookmarkMutation } from '../hooks/useQuestions';
+import { useToast } from './Toast';
 import NotionRenderer from './NotionRenderer';
 import './QuestionCard.css';
 
@@ -10,6 +11,7 @@ export default function QuestionCard({ question, simple, showBookmark, queryKey 
   const [blocks, setBlocks] = useState(null);
   const [loading, setLoading] = useState(false);
   const loaded = useRef(false);
+  const toast = useToast();
 
   const bookmarkMutation = useBookmarkMutation(queryKey);
 
@@ -23,10 +25,13 @@ export default function QuestionCard({ question, simple, showBookmark, queryKey 
       setLoading(true);
       fetchPageBlocks(question.id)
         .then(setBlocks)
-        .catch(() => setBlocks([]))
+        .catch(() => {
+          setBlocks([]);
+          toast.error('내용을 불러올 수 없습니다');
+        })
         .finally(() => setLoading(false));
     }
-  }, [simple, open, question.id]);
+  }, [simple, open, question.id, toast]);
 
   const handleDetail = async () => {
     const willOpen = !detailOpen;
@@ -40,6 +45,7 @@ export default function QuestionCard({ question, simple, showBookmark, queryKey 
         setBlocks(data);
       } catch {
         setBlocks([]);
+        toast.error('내용을 불러올 수 없습니다');
       } finally {
         setLoading(false);
       }
@@ -48,10 +54,16 @@ export default function QuestionCard({ question, simple, showBookmark, queryKey 
 
   const handleBookmarkToggle = (e) => {
     e.stopPropagation();
-    bookmarkMutation.mutate({
-      pageId: question.id,
-      checked: !question.bookmarked,
-    });
+    const newChecked = !question.bookmarked;
+    toast.success(newChecked ? '즐겨찾기에 추가됨' : '즐겨찾기에서 제거됨');
+    bookmarkMutation.mutate(
+      { pageId: question.id, checked: newChecked },
+      {
+        onError: () => {
+          toast.error('즐겨찾기 변경 실패');
+        },
+      }
+    );
   };
 
   return (

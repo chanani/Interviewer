@@ -1,7 +1,8 @@
 import { useState, useMemo } from 'react';
 import { useCultureFitQuestions } from '../hooks/useQuestions';
 import CategoryFilter from '../components/CategoryFilter';
-import Loading from '../components/Loading';
+import { SkeletonQuiz } from '../components/Skeleton';
+import EmptyState from '../components/EmptyState';
 import './CultureFitQuizPage.css';
 
 function shuffle(array) {
@@ -65,7 +66,7 @@ export default function CultureFitQuizPage() {
     setRevealed(false);
   };
 
-  if (isLoading) return <Loading />;
+  if (isLoading) return <SkeletonQuiz />;
 
   if (error) {
     return (
@@ -81,16 +82,7 @@ export default function CultureFitQuizPage() {
   if (!current) {
     return (
       <div className="cf-quiz">
-        {categories.length > 0 && (
-          <CategoryFilter
-            categories={categories}
-            selected={category}
-            onChange={handleCategoryChange}
-          />
-        )}
-        <div className="cf-quiz-error">
-          <p>즐겨찾기된 질문이 없습니다.</p>
-        </div>
+        <EmptyState type="bookmark" />
       </div>
     );
   }
