@@ -156,15 +156,14 @@ export default function CultureFitQuizPage() {
         >
           이전
         </button>
-        {!revealed ? (
+        {!revealed && (
           <button className="cf-quiz-btn primary" onClick={handleReveal}>
             정답 보기
           </button>
-        ) : (
-          <button className="cf-quiz-btn success" onClick={handleNext}>
-            {isLast ? '처음부터' : '다음'}
-          </button>
         )}
+        <button className="cf-quiz-btn success" onClick={handleNext}>
+          {isLast ? '처음부터' : '다음'}
+        </button>
       </div>
     </div>
   );
