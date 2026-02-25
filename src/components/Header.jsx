@@ -34,7 +34,7 @@ export default function Header() {
               `header-link ${isActive ? 'active' : ''}`
             }
           >
-            컬처핏 목록
+            컬처핏 공부
           </NavLink>
           <NavLink
             to="/culture-quiz"

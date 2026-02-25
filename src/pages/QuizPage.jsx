@@ -8,7 +8,6 @@ import InterviewTimer from '../components/InterviewTimer';
 import { SkeletonQuiz } from '../components/Skeleton';
 import EmptyState from '../components/EmptyState';
 import { useToast } from '../components/Toast';
-import ContentTab from '../components/ContentTab';
 import './QuizPage.css';
 
 function shuffle(array) {
@@ -146,8 +145,6 @@ export default function QuizPage() {
 
   return (
     <div className="quiz">
-      <ContentTab type="quiz" />
-
       {categories.length > 0 && (
         <CategoryFilter
           categories={categories}

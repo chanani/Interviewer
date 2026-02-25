@@ -43,7 +43,7 @@ export default function HomePage() {
               <path d="M16 3.13a4 4 0 0 1 0 7.75" />
             </svg>
           </div>
-          <span className="home-card-title">컬처핏 목록</span>
+          <span className="home-card-title">컬처핏 공부</span>
         </Link>
         <Link to="/culture-quiz" className="home-card">
           <div className="home-card-icon culture-quiz-icon">

@@ -5,7 +5,6 @@ import CategoryFilter from '../components/CategoryFilter';
 import SearchInput from '../components/SearchInput';
 import { SkeletonList } from '../components/Skeleton';
 import EmptyState from '../components/EmptyState';
-import ContentTab from '../components/ContentTab';
 import './BrowsePage.css';
 
 const QUERY_KEY = ['cs-questions'];
@@ -59,7 +58,6 @@ export default function BrowsePage() {
 
   return (
     <div className="browse">
-      <ContentTab type="browse" />
       <div className="browse-header">
         <h1 className="browse-title">CS 공부</h1>
         <span className="browse-count">{filtered.length}개</span>

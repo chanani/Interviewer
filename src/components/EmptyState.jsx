@@ -20,7 +20,7 @@ export default function EmptyState({ type = 'bookmark' }) {
             CS 목록 보기
           </Link>
           <Link to="/culture" className="empty-state-btn secondary">
-            컬처핏 목록 보기
+            컬처핏 공부 보기
           </Link>
         </div>
       </div>

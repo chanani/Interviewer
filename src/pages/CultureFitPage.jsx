@@ -5,7 +5,6 @@ import CategoryFilter from '../components/CategoryFilter';
 import SearchInput from '../components/SearchInput';
 import { SkeletonList } from '../components/Skeleton';
 import EmptyState from '../components/EmptyState';
-import ContentTab from '../components/ContentTab';
 import './CultureFitPage.css';
 
 const QUERY_KEY = ['culturefit-questions'];
@@ -41,7 +40,7 @@ export default function CultureFitPage() {
     return (
       <div className="culture">
         <div className="culture-header">
-          <h1 className="culture-title">컬처핏 목록</h1>
+          <h1 className="culture-title">컬처핏 공부</h1>
         </div>
         <SkeletonList count={6} />
       </div>
@@ -59,9 +58,8 @@ export default function CultureFitPage() {
 
   return (
     <div className="culture">
-      <ContentTab type="browse" />
       <div className="culture-header">
-        <h1 className="culture-title">컬처핏 목록</h1>
+        <h1 className="culture-title">컬처핏 공부</h1>
         <span className="culture-count">{filtered.length}개</span>
       </div>
       <SearchInput
