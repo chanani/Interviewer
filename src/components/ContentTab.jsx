@@ -1,26 +1,20 @@
-import { useNavigate, useLocation } from 'react-router-dom';
 import './ContentTab.css';
 
-const TABS = [
-  { label: 'CS', paths: { browse: '/browse', quiz: '/quiz' } },
-  { label: '컬처핏', paths: { browse: '/culture', quiz: '/culture-quiz' } },
-];
-
-export default function ContentTab({ type }) {
-  const navigate = useNavigate();
-  const { pathname } = useLocation();
-
+export default function ContentTab({ value, onChange, bookmarkCount }) {
   return (
     <div className="content-tab">
-      {TABS.map((tab) => (
-        <button
-          key={tab.label}
-          className={`content-tab-btn ${pathname === tab.paths[type] ? 'active' : ''}`}
-          onClick={() => navigate(tab.paths[type])}
-        >
-          {tab.label}
-        </button>
-      ))}
+      <button
+        className={`content-tab-btn ${value === 'all' ? 'active' : ''}`}
+        onClick={() => onChange('all')}
+      >
+        전체
+      </button>
+      <button
+        className={`content-tab-btn ${value === 'bookmark' ? 'active' : ''}`}
+        onClick={() => onChange('bookmark')}
+      >
+        즐겨찾기{bookmarkCount > 0 && <span className="content-tab-badge">{bookmarkCount}</span>}
+      </button>
     </div>
   );
 }

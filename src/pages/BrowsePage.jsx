@@ -3,6 +3,7 @@ import { useCSQuestions } from '../hooks/useQuestions';
 import QuestionCard from '../components/QuestionCard';
 import CategoryFilter from '../components/CategoryFilter';
 import SearchInput from '../components/SearchInput';
+import ContentTab from '../components/ContentTab';
 import { SkeletonList } from '../components/Skeleton';
 import EmptyState from '../components/EmptyState';
 import './BrowsePage.css';
@@ -13,16 +14,26 @@ export default function BrowsePage() {
   const { data: questions = [], isLoading, error } = useCSQuestions();
   const [category, setCategory] = useState('');
   const [search, setSearch] = useState('');
+  const [tab, setTab] = useState('all');
 
   const categories = useMemo(() => {
     const set = new Set(questions.map((q) => q.category).filter(Boolean));
     return [...set];
   }, [questions]);
 
+  const bookmarkCount = useMemo(
+    () => questions.filter((q) => q.bookmarked).length,
+    [questions]
+  );
+
   const filtered = useMemo(() => {
-    let list = category
-      ? questions.filter((q) => q.category === category)
+    let list = tab === 'bookmark'
+      ? questions.filter((q) => q.bookmarked)
       : questions;
+
+    if (category) {
+      list = list.filter((q) => q.category === category);
+    }
 
     if (search.trim()) {
       const keyword = search.trim().toLowerCase();
@@ -33,8 +44,8 @@ export default function BrowsePage() {
       );
     }
 
-    return [...list].sort((a, b) => (b.bookmarked ? 1 : 0) - (a.bookmarked ? 1 : 0));
-  }, [questions, category, search]);
+    return list;
+  }, [questions, category, search, tab]);
 
   if (isLoading) {
     return (
@@ -62,6 +73,7 @@ export default function BrowsePage() {
         <h1 className="browse-title">CS 공부</h1>
         <span className="browse-count">{filtered.length}개</span>
       </div>
+      <ContentTab value={tab} onChange={setTab} bookmarkCount={bookmarkCount} />
       <SearchInput
         value={search}
         onChange={setSearch}
