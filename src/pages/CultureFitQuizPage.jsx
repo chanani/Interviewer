@@ -5,6 +5,7 @@ import VoiceRecorder from '../components/VoiceRecorder';
 import InterviewTimer from '../components/InterviewTimer';
 import { SkeletonQuiz } from '../components/Skeleton';
 import EmptyState from '../components/EmptyState';
+import ContentTab from '../components/ContentTab';
 import './CultureFitQuizPage.css';
 
 function shuffle(array) {
@@ -107,6 +108,8 @@ export default function CultureFitQuizPage() {
 
   return (
     <div className="cf-quiz">
+      <ContentTab type="quiz" />
+
       {categories.length > 0 && (
         <CategoryFilter
           categories={categories}

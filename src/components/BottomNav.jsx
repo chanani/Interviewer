@@ -1,9 +1,13 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { useTheme } from '../hooks/useTheme.jsx';
 import './BottomNav.css';
 
 export default function BottomNav() {
   const { theme, toggleTheme } = useTheme();
+  const { pathname } = useLocation();
+
+  const isStudyActive = pathname === '/browse' || pathname === '/culture';
+  const isQuizActive = pathname === '/quiz' || pathname === '/culture-quiz';
 
   return (
     <nav className="bottom-nav">
@@ -22,9 +26,7 @@ export default function BottomNav() {
       </NavLink>
       <NavLink
         to="/browse"
-        className={({ isActive }) =>
-          `bottom-nav-item ${isActive ? 'active' : ''}`
-        }
+        className={`bottom-nav-item ${isStudyActive ? 'active' : ''}`}
       >
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <line x1="8" y1="6" x2="21" y2="6" />
@@ -34,20 +36,18 @@ export default function BottomNav() {
           <line x1="3" y1="12" x2="3.01" y2="12" />
           <line x1="3" y1="18" x2="3.01" y2="18" />
         </svg>
-        <span>CS 공부</span>
+        <span>공부</span>
       </NavLink>
       <NavLink
         to="/quiz"
-        className={({ isActive }) =>
-          `bottom-nav-item ${isActive ? 'active' : ''}`
-        }
+        className={`bottom-nav-item ${isQuizActive ? 'active' : ''}`}
       >
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <circle cx="12" cy="12" r="10" />
           <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
           <line x1="12" y1="17" x2="12.01" y2="17" />
         </svg>
-        <span>CS 면접</span>
+        <span>면접</span>
       </NavLink>
       <button
         className="bottom-nav-item"
