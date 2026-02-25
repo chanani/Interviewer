@@ -20,7 +20,7 @@ export default function QuestionCard({ question, simple, showBookmark, queryKey 
   };
 
   useEffect(() => {
-    if (simple && open && !loaded.current) {
+    if (!simple && open && !loaded.current) {
       loaded.current = true;
       setLoading(true);
       fetchPageBlocks(question.id)
@@ -100,13 +100,14 @@ export default function QuestionCard({ question, simple, showBookmark, queryKey 
       <div className="question-card-collapse">
         <div className="question-card-body">
           {simple ? (
-            loading ? (
-              <div className="question-card-loading">
-                <div className="question-card-spinner" />
+            question.answer ? (
+              <div className="question-card-answer">
+                <h4 className="question-card-label">면접 답변</h4>
+                <p className="question-card-answer-text">{question.answer}</p>
               </div>
-            ) : blocks ? (
-              <NotionRenderer blocks={blocks} />
-            ) : null
+            ) : (
+              <p className="question-card-empty">답변이 없습니다</p>
+            )
           ) : (
             <>
               {question.answer && (
